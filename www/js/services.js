@@ -1,53 +1,5 @@
 angular.module('starter.services', [])
 
-.service('modalService', function($ionicModal) {
-
-  this.openModal = function(id) {
-
-    var _this = this;
-
-    if (id == 1) {
-      $ionicModal.fromTemplateUrl('templates/slipwayDetails.html', {
-        id: '1',
-        scope: null,
-      }).then(function(modal) {
-        console.log('modal', modal);
-        _this.modal = modal;
-        _this.modal.show();
-      });
-    } else if (id == 2) {
-      $ionicModal.fromTemplateUrl('templates/login.html', {
-        id: '3',
-        controller: 'LoginSearchCtrl'
-      }).then(function(modal) {
-        _this.modal = modal;
-        _this.modal.show();
-      });
-    }else if (id == 3) {
-      $ionicModal.fromTemplateUrl('templates/signup.html', {
-        id: '3',
-        scope: null,
-        controller: 'LoginSearchCtrl'
-      }).then(function(modal) {
-        _this.modal = modal;
-        _this.modal.show();
-      });
-    }
-  };
-
-  this.closeModal = function() {
-
-    console.log('close');
-    var _this = this;
-
-    if (!_this.modal) return;
-    _this.modal.hide();
-    _this.modal.remove();
-  };
-
-})
-
-
 .constant('FIREBASE_URL', 'https://boatlaunch.firebaseio.com/')
 
 
@@ -61,6 +13,15 @@ angular.module('starter.services', [])
 .factory('slipwayLatLngService', function($q, firebaseRef) {
 
   var memo = null;
+  var loaded = false;
+
+  var getSavedLatLngs = function() {
+    return memo;
+  };
+
+  var isLoaded = function() {
+    return loaded;
+  };
 
   var loadData = function() {
     var deferred = $q.defer();
@@ -74,6 +35,7 @@ angular.module('starter.services', [])
 
         var latLngs = snapshot.val();
         memo = latLngs;
+        loaded = true;
         deferred.resolve(latLngs);
 
       },
@@ -83,16 +45,36 @@ angular.module('starter.services', [])
     return deferred.promise;
   };
 
+  var saveData = function(id, data) {
+    console.log('id, data', id, data);
+
+    var latLngOnly = [data.lat, data.lng, id];
+    console.log('latLngOnly',latLngOnly);
+    firebaseRef.child("latLngs").child(id).set(latLngOnly, function(error) {
+      if (error) {
+        console.log('slipwayDetails Synchronization failed', error);
+      } else {
+        console.log('slipwayDetails Synchronization succeeded');
+      }
+    });
+  };
+
   return {
-    loadData: loadData
+    loadData: loadData,
+    saveData: saveData,
+    isLoaded: isLoaded,
+    getSavedLatLngs: getSavedLatLngs
   };
 })
 
 .factory('slipwayDetailsService', function($q, firebaseRef) {
 
-  // var MAX_STORED = 20;
   var memo = {};
   var mostRecentSlipway;
+
+  var getMostRecentSlipway = function() {
+    return mostRecentSlipway;
+  };
 
   var loadData = function(slipwayKey) {
     var deferred = $q.defer();
@@ -104,9 +86,9 @@ angular.module('starter.services', [])
 
     firebaseRef.child("slipwayDetails").child(slipwayKey).once('value', function(snapshot) {
 
-        var slipwayDetails = snapshot.val();
+        var slipwayDetails = mostRecentSlipway = snapshot.val();
         memo[slipwayKey] = slipwayDetails;
-        deferred.resolve(snapshot.val());
+        deferred.resolve(slipwayDetails);
 
       },
       function(error) {
@@ -115,17 +97,60 @@ angular.module('starter.services', [])
     return deferred.promise;
   };
 
+  var saveData = function(id, data) {
+    console.log('id, data', id, data);
+
+    var withLatLngRemoved = {
+      Charges: data.Charges || null,
+      Directions: data.Directions || null,
+      Facilities: data.Facilities || null,
+      LowerArea: data.LowerArea || null,
+      Name: data.Name || null,
+      NavigationalHazards: data.NavigationalHazards || null,
+      NearestPlace: data.NearestPlace || null,
+      RampDescription: data.RampDescription || null,
+      RampLength: data.RampLength || null,
+      RampType: data.RampType || null,
+      Suitability: data.Suitability || null,
+      UpperArea: data.UpperArea || null,
+      idKey: id
+    };
+
+    console.log('withLatLngRemoved',withLatLngRemoved);
+    firebaseRef.child("slipwayDetails").child(id).set(withLatLngRemoved, function(error) {
+      if (error) {
+        console.log('slipwayDetails Synchronization failed', error);
+      } else {
+        console.log('slipwayDetails Synchronization succeeded');
+      }
+    });
+  };
+
   return {
     loadData: loadData,
-    mostRecentSlipway: mostRecentSlipway
+    saveData: saveData,
+    getMostRecentSlipway: getMostRecentSlipway
   };
 })
 
-.factory('userService', function() {
+.factory('addNewSlipway', function(slipwayDetailsService, slipwayLatLngService){
 
+  return function(data){
+    var maxNumber = 0;
+    var latLngs = slipwayLatLngService.getSavedLatLngs();
 
+    for(var latLngKey in latLngs){
+      var idNumber = Number(latLngs[latLngKey][2]);
 
-  return {
+      if(idNumber >= maxNumber){
+        maxNumber = idNumber + 1;
+      }
+    }
+
+    console.log('maxNumber.toString(), data',maxNumber.toString(), data);
+    // slipwayLatLngService.saveData(maxNumber.toString(), data);
+    // slipwayDetailsService.saveData(maxNumber.toString(), data);
+
 
   };
 });

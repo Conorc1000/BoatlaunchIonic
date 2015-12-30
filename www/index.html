@@ -2,7 +2,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Map</title>
+  <title>Boatlaunch</title>
   <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
 
   <link href="lib/ionic/css/ionic.css" rel="stylesheet">
@@ -33,48 +33,6 @@
 
   <ion-nav-view></ion-nav-view>
 
-
-  <script id="map.html" type="text/ng-template">
-    <ion-header-bar class="bar-dark">
-      <h1 class="title">Boatlaunch</h1>
-    </ion-header-bar>
-    <ion-content>
-      <div id="map" data-tap-disabled="true"></div>
-    </ion-content>
-    <ion-footer-bar class="bar-dark">
-      <a ng-click="centerOnMe()" class="button button-icon icon ion-navigate">Find Me</a>
-    </ion-footer-bar>
-  </script>
-
-  <script id="tabs.html" type="text/ng-template">
-    <tabs tabs-style="tabs-icon-top" tabs-type="tabs-positive">
-
-      <tab title="Home" icon="ion-home" href="#/tab/home">
-        <nav-view name="home-tab"></nav-view>
-      </tab>
-
-      <tab title="About" icon="ion-ios7-information" href="#/tab/about">
-        <nav-view name="about-tab"></nav-view>
-      </tab>
-
-      <tab title="Sign-Out" icon="ion-log-out" href="#/sign-in">
-      </tab>
-
-    </tabs>
-  </script>
-
-  <script id="about.html" type="text/ng-template">
-    <view title="'About'">
-      <content has-header="true" padding="true">
-        <h3>Create hybrid mobile apps with the web technologies you love.</h3>
-        <p>Free and open source, Ionic offers a library of mobile-optimized HTML, CSS and JS components for building highly interactive apps.</p>
-        <p>Built with Sass and optimized for AngularJS.</p>
-        <p>
-          <a class="button icon icon-right ion-chevron-right" href="#/tab/navstack">Tabs Nav Stack</a>
-        </p>
-      </content>
-    </view>
-  </script>
 </body>
 
 </html>

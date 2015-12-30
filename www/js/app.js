@@ -19,13 +19,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives',
   $stateProvider
     .state('map', {
       url: "/map",
-      templateUrl: "map.html",
+      templateUrl: "templates/map.html",
       controller: 'MapCtrl'
     })
-    .state('tabs', {
-      url: "/tab",
-      abstract: true,
-      templateUrl: "tabs.html"
+    .state('details', {
+      url: "/details",
+      templateUrl: "templates/slipwayDetails.html",
+      controller: 'SlipwayDetailsCtrl'
+    })
+    .state('newSlipway', {
+      url: "/newSlipway",
+      templateUrl: "templates/newSlipway.html",
+      controller: 'NewSlipwayCtrl'
     })
     .state('tabs.about', {
       url: "/about",

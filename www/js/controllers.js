@@ -1,7 +1,7 @@
 angular.module('starter.controllers', [])
 
 
-.controller('MapCtrl', function($scope, $ionicLoading, $compile, slipwayLatLngService, slipwayDetailsService, modalService, $ionicModal) {
+.controller('MapCtrl', function($scope, $ionicLoading, $compile, slipwayLatLngService, slipwayDetailsService, $state) {
   function initialize() {
     console.log('init');
     var center = new google.maps.LatLng(51.5, 0);
@@ -29,8 +29,7 @@ angular.module('starter.controllers', [])
 
         var marker = new google.maps.Marker({
           position: position,
-          map: map,
-          title: 'Uluru (Ayers Rock)'
+          map: map
         });
 
         addInfoWindow(marker, latLng);
@@ -47,17 +46,17 @@ angular.module('starter.controllers', [])
 
       var slipwayKey = latLng[2];
       marker.addListener('click', function() {
-        var content = slipwayDetailsService.loadData(slipwayKey).then(function(data) {
+        slipwayDetailsService.loadData(slipwayKey).then(function(data) {
           console.log('slipway click', data);
           var name = data.Name || 'unknown',
             lat = latLng[0].substr(0, 10),
             lng = latLng[1].substr(0, 10);
 
-          var contentString = "<div>" +
+          var contentString = "<div class='scrollFix'>" +
             "<div><b> Name:</b> " + name + "</div>" +
             "<div> <b> Lat: </b>" + lat + "</div>" +
-            "<div> <b> Lat: </b>" + lng + "</div>" +
-            "<button href='#/tab/about' class='button button-full button-small button-positive'>More Info</button>" +
+            "<div> <b> Lng: </b>" + lng + "</div>" +
+            "<button ng-click='goToDetails()' class='button button-full button-small button-positive'>More Info</button>" +
             "</div>";
 
           var compiled = $compile(contentString)($scope);
@@ -77,13 +76,19 @@ angular.module('starter.controllers', [])
   }
 
 
-  $scope.openModal = function(index) {
-    console.log('MapCtrl open modal');
-    // $scope.oModal1.show();
+  $scope.goToDetails = function() {
+    $state.go('details');
   };
 
+  $scope.addSlipway = function() {
+    $state.go('newSlipway');
+  };
 
-  google.maps.event.addDomListener(window, 'load', initialize);
+  if (slipwayLatLngService.isLoaded()) {
+    initialize();
+  } else {
+    google.maps.event.addDomListener(window, 'load', initialize);
+  }
 
   $scope.centerOnMe = function() {
     if (!$scope.map) {
@@ -105,61 +110,57 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('slipwayDetailsCtrl', function($scope, slipwayDetailsService, modalService) {
+.controller('SlipwayDetailsCtrl', function($scope, $state, slipwayLatLngService, slipwayDetailsService) {
 
-  $scope.slipwayDetails = slipwayDetailsService.mostRecentSlipway;
+  $scope.slipwayDetails = slipwayDetailsService.getMostRecentSlipway();
+  var slipwayCopy = angular.copy($scope.slipwayDetails);
 
-  $scope.closeModal = function() {
-    console.log('closeModal');
-    modalService.closeModal();
+  if (!$scope.slipwayDetails) {
+    $state.go('map');
+  } else {
+    var id = $scope.slipwayDetails.idKey;
+    $scope.slipwayPropKeys = Object.keys($scope.slipwayDetails);
+    $scope.slipwayDetails.lat = slipwayLatLngService.getSavedLatLngs()[id][0];
+    $scope.slipwayDetails.lng = slipwayLatLngService.getSavedLatLngs()[id][1];
+  }
+
+  $scope.editing = false;
+
+  $scope.editSlipway = function() {
+    $scope.editing = true;
   };
 
-  console.log('$scope.closeModal', $scope.closeModal);
+  $scope.cancelEditSlipway = function() {
+    $scope.editing = false;
+    $scope.slipwayDetails = angular.copy(slipwayCopy);
+  };
+
+  $scope.saveChanges = function() {
+    $scope.editing = false;
+    slipwayLatLngService.saveData(slipwayCopy.idKey, $scope.slipwayDetails);
+    slipwayDetailsService.saveData(slipwayCopy.idKey, $scope.slipwayDetails);
+  };
+
+  $scope.flagSlipway = function() {
+    console.log('flag slipway');
+  };
+
+  $scope.goToMap = function() {
+    $state.go('map');
+  };
+
   console.log('$scope.slipwayDetails', $scope.slipwayDetails);
 })
 
-.controller('LoginSignupCtrl', ['$scope', 'modalService', 'userService',
-  function($scope, modalService, userService) {
+.controller('NewSlipwayCtrl', function($scope, $state, addNewSlipway) {
+  $scope.slipwayDetails = {};
 
-    $scope.user = {
-      email: '',
-      password: ''
-    };
+  $scope.goToMap = function() {
+    $state.go('map');
+  };
 
-    $scope.closeModal = function() {
-      console.log('closemodal');
-      // modalService.closeModal();
-    };
 
-    $scope.signup = function(user) {
-      // userService.signup(user);
-    };
-
-    $scope.login = function(user) {
-      // userService.login(user);
-    };
-  }
-])
-
-.controller('MyStocksCtrl', ['$scope', 'modalService', 'userService',
-  function($scope, modalService, userService) {
-
-    $scope.list = {
-      email: '',
-      password: ''
-    };
-
-    $scope.closeModal = function() {
-      console.log('closemodal');
-      // modalService.closeModal();
-    };
-
-    $scope.signup = function(user) {
-      // userService.signup(user);
-    };
-
-    $scope.login = function(user) {
-      // userService.login(user);
-    };
-  }
-])
+  $scope.saveChanges = function() {
+    addNewSlipway($scope.slipwayDetails);
+  };
+});

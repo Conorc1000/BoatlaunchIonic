@@ -1,54 +1,16 @@
 <ion-view>
 
   <ion-header-bar class="bar-dark">
-    <h1 class="title">Slipway Details</h1>
+    <h1 class="title">New Slipway</h1>
     <div class="buttons">
       <button class="button button-clear" ng-click="goToMap()">Back</button>
     </div>
   </ion-header-bar>
 
-  <ion-content overflow-scroll="true" >
-    <div ng-if="!editing">
-
-      <h2 class="selectable" ng-if="slipwayDetails.Name" class="col">{{slipwayDetails.Name}}</h2>
-
-      <div class="row responsive-sm">
-        <div class="col selectable"><b>Name: </b> {{slipwayDetails.Name || 'unknown'}}</div>
-        <div class="col selectable"><b>Lat: </b> {{slipwayDetails.lat}}</div>
-        <div class="col selectable"><b>Lng: </b> {{slipwayDetails.lng}}</div>
-      </div>
-      <div class="row responsive-sm">
-        <div class="col selectable"><b>Description: </b> {{slipwayDetails.RampDescription || 'None'}}</div>
-      </div>
-      <div class="row responsive-sm">
-        <div class="col selectable"><b>Directions: </b> {{slipwayDetails.Directions || 'None'}}</div>
-      </div>
-      <div class="row responsive-sm">
-        <div class="col selectable"><b>Facilities: </b> {{slipwayDetails.Facilities || 'Unknown'}}</div>
-      </div>
-      <div class="row responsive-sm">
-        <div class="col selectable"><b>Navigational Hazards: </b> {{slipwayDetails.NavigationalHazards || 'Unknown'}}</div>
-      </div>
-      <div class="row responsive-sm">
-        <div class="col selectable"><b>Charges: </b> {{slipwayDetails.Charges || 'Unknown'}}</div>
-      </div>
-      <div class="row responsive-sm">
-        <div class="col selectable"><b>Ramp Type: </b> {{slipwayDetails.RampType || 'Unknown'}}</div>
-      </div>
-      <div class="row responsive-sm">
-        <div class="col selectable"><b>Suitability: </b> {{slipwayDetails.Suitability || 'Unknown'}}</div>
-        <div class="col selectable"><b>Upper Area: </b> {{slipwayDetails.UpperArea || 'Unknown'}}</div>
-        <div class="col selectable"><b>Lower Area: </b> {{slipwayDetails.LowerArea || 'Unknown'}}</div>
-      </div>
-      <div class="row responsive-sm">
-        <div class="col selectable"><b>Phone Number: </b> {{slipwayDetails.PhoneNumber || 'Unknown'}}</div>
-        <div class="col selectable"><b>Email: </b> {{slipwayDetails.Email || 'Unknown'}}</div>
-        <div class="col selectable"><b>Nearest Place: </b> {{slipwayDetails.NearestPlace || 'Unknown'}}</div>
-
-      </div>
-    </div>
-
-    <div ng-if="editing">
+  <ion-content>
+    <h2> New slipway: {{slipwayDetails.Name}}</h2>
+    <h3> You can also add new slipways by right clicking on the map</h3>
+    <div>
       <div class="list">
         <label class="item item-input item-floating-label">
           <span class="input-label">Name: </span>
@@ -77,7 +39,8 @@
           <textarea ng-model="slipwayDetails.Facilities"></textarea>
         </label>
         <label class="item item-input item-floating-label">
-          <span class="input-label">Navigational <br> Hazards: </span>
+          <span class="input-label">Navigational
+            <br> Hazards: </span>
           <textarea ng-model="slipwayDetails.NavigationalHazards"></textarea>
         </label>
         <label class="item item-input item-floating-label">
@@ -110,15 +73,13 @@
         <label class="item item-input item-floating-label">
           <span class="input-label">Email: </span>
           <input type="text" ng-model="slipwayDetails.Email" placeholder="name@domain.com">
-        </label> 
+        </label>
       </div>
     </div>
-    <a ng-show="!editing" ng-click="uploadImages()" class="button button-icon icon ion-image">Upload Images</a>
+    <a ng-click="uploadImages()" class="button button-icon icon ion-image">Upload Images</a>
   </ion-content>
   <ion-footer-bar class="bar-dark">
-    <a ng-show="!editing" ng-click="editSlipway()" class="button button-icon icon ion-edit">Edit Information</a>
-    <a ng-show="editing" ng-click="cancelEditSlipway()" class="button button-icon icon ion-close-circled">Cancel</a>
-    <a ng-show="!editing" ng-click="flagSlipway()" class="button pull-right button-icon button-assertive icon ion-alert-circled">Flag Slipway</a>
-    <a ng-show="editing" ng-click="saveChanges()" class="button pull-right button-icon icon ion-checkmark-round">Save Changes</a>
+    <a ng-click="goToMap()" class="button button-icon icon ion-close-circled">Cancel</a>
+    <a ng-click="saveChanges()" class="button pull-right button-icon icon ion-checkmark-round">Save Changes</a>
   </ion-footer-bar>
 </ion-view>
