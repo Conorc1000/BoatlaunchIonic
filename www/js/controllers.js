@@ -152,15 +152,30 @@ angular.module('starter.controllers', [])
   console.log('$scope.slipwayDetails', $scope.slipwayDetails);
 })
 
-.controller('NewSlipwayCtrl', function($scope, $state, addNewSlipway) {
+.controller('NewSlipwayCtrl', function($scope, $state, $ionicPopup, addNewSlipway) {
   $scope.slipwayDetails = {};
 
   $scope.goToMap = function() {
     $state.go('map');
   };
 
+  var showAlert = function() {
+    var alertPopup = $ionicPopup.alert({
+      title: 'Invalid slipway data. \n Pease check that slipway has a name, lat and lng',
+      template: ''
+    });
+
+    alertPopup.then(function(res) {
+      console.log('Thank you for not eating my delicious ice cream cone');
+    });
+  };
 
   $scope.saveChanges = function() {
-    addNewSlipway($scope.slipwayDetails);
+
+    if (!$scope.slipwayDetails.Name || !$scope.slipwayDetails.lat || !$scope.slipwayDetails.lng) {
+      showAlert();
+    } else {
+      addNewSlipway($scope.slipwayDetails);
+    }
   };
 });

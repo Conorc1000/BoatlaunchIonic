@@ -18,11 +18,11 @@
         </label>
         <label class="item item-input item-floating-label">
           <span class="input-label">Latitude: </span>
-          <input type="text" ng-model="slipwayDetails.lat">
+          <input type="number" min="-90" max="90" ng-model="slipwayDetails.lat">
         </label>
         <label class="item item-input item-floating-label">
           <span class="input-label">Longitude: </span>
-          <input type="text" ng-model="slipwayDetails.lng">
+          <input type="number" min="-180" max="180" ng-model="slipwayDetails.lng">
         </label>
       </div>
       <div class="list">
