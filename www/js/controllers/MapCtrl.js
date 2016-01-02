@@ -1,7 +1,7 @@
-angular.module('starter.controllers', [])
+boatlaunchControllers
 
-
-.controller('MapCtrl', function($scope, $ionicLoading, $compile, slipwayLatLngService, slipwayDetailsService, $state) {
+.controller('MapCtrl', function($scope, $ionicLoading, $compile, SlipwayLatLngService, SlipwayDetailsService, $state) {
+  //called when the page loads or you go back to the route
   function initialize() {
     console.log('init');
     var center = new google.maps.LatLng(51.5, 0);
@@ -19,7 +19,7 @@ angular.module('starter.controllers', [])
 
     $scope.map = map;
 
-    slipwayLatLngService.loadData().then(function(latLngs) {
+    SlipwayLatLngService.loadData().then(function(latLngs) {
       for (var LatLngKey in latLngs) {
         var latLng = latLngs[LatLngKey];
         var lat = Number(latLng[0]);
@@ -31,7 +31,7 @@ angular.module('starter.controllers', [])
           position: position,
           map: map
         });
-
+        //adds a listener sets the window to have the correct info and location
         addInfoWindow(marker, latLng);
         $scope.map = map;
 
@@ -46,7 +46,7 @@ angular.module('starter.controllers', [])
 
       var slipwayKey = latLng[2];
       marker.addListener('click', function() {
-        slipwayDetailsService.loadData(slipwayKey).then(function(data) {
+        SlipwayDetailsService.loadData(slipwayKey).then(function(data) {
           console.log('slipway click', data);
           var name = data.Name || 'unknown',
             lat = latLng[0].substr(0, 10),
@@ -77,14 +77,15 @@ angular.module('starter.controllers', [])
 
 
   $scope.goToDetails = function() {
+    //changes to the details state
     $state.go('details');
   };
 
   $scope.addSlipway = function() {
     $state.go('newSlipway');
   };
-
-  if (slipwayLatLngService.isLoaded()) {
+  if(true){
+  //if (SlipwayLatLngService.isLoaded()) {
     initialize();
   } else {
     google.maps.event.addDomListener(window, 'load', initialize);
@@ -109,73 +110,3 @@ angular.module('starter.controllers', [])
   };
 
 })
-
-.controller('SlipwayDetailsCtrl', function($scope, $state, slipwayLatLngService, slipwayDetailsService) {
-
-  $scope.slipwayDetails = slipwayDetailsService.getMostRecentSlipway();
-  var slipwayCopy = angular.copy($scope.slipwayDetails);
-
-  if (!$scope.slipwayDetails) {
-    $state.go('map');
-  } else {
-    var id = $scope.slipwayDetails.idKey;
-    $scope.slipwayPropKeys = Object.keys($scope.slipwayDetails);
-    $scope.slipwayDetails.lat = slipwayLatLngService.getSavedLatLngs()[id][0];
-    $scope.slipwayDetails.lng = slipwayLatLngService.getSavedLatLngs()[id][1];
-  }
-
-  $scope.editing = false;
-
-  $scope.editSlipway = function() {
-    $scope.editing = true;
-  };
-
-  $scope.cancelEditSlipway = function() {
-    $scope.editing = false;
-    $scope.slipwayDetails = angular.copy(slipwayCopy);
-  };
-
-  $scope.saveChanges = function() {
-    $scope.editing = false;
-    slipwayLatLngService.saveData(slipwayCopy.idKey, $scope.slipwayDetails);
-    slipwayDetailsService.saveData(slipwayCopy.idKey, $scope.slipwayDetails);
-  };
-
-  $scope.flagSlipway = function() {
-    console.log('flag slipway');
-  };
-
-  $scope.goToMap = function() {
-    $state.go('map');
-  };
-
-  console.log('$scope.slipwayDetails', $scope.slipwayDetails);
-})
-
-.controller('NewSlipwayCtrl', function($scope, $state, $ionicPopup, addNewSlipway) {
-  $scope.slipwayDetails = {};
-
-  $scope.goToMap = function() {
-    $state.go('map');
-  };
-
-  var showAlert = function() {
-    var alertPopup = $ionicPopup.alert({
-      title: 'Invalid slipway data. \n Pease check that slipway has a name, lat and lng',
-      template: ''
-    });
-
-    alertPopup.then(function(res) {
-      console.log('Thank you for not eating my delicious ice cream cone');
-    });
-  };
-
-  $scope.saveChanges = function() {
-
-    if (!$scope.slipwayDetails.Name || !$scope.slipwayDetails.lat || !$scope.slipwayDetails.lng) {
-      showAlert();
-    } else {
-      addNewSlipway($scope.slipwayDetails);
-    }
-  };
-});

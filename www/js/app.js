@@ -1,4 +1,4 @@
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives', 'starter.services'])
+angular.module('starter', ['ionic', 'ion-gallery', 'starter.controllers', 'starter.services'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -14,7 +14,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives',
       StatusBar.styleHex("#FFFFFF");
     }
   });
-}).config(function($stateProvider, $urlRouterProvider) {
+}).config(function($stateProvider, $urlRouterProvider, ionGalleryConfigProvider) {
+
+  ionGalleryConfigProvider.setGalleryConfig({
+    action_label: 'Close',
+    row_size: 3
+  });
 
   $stateProvider
     .state('map', {
