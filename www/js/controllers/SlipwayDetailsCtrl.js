@@ -28,6 +28,7 @@ boatlaunchControllers
   $scope.editing = false;
 
   $scope.editSlipway = function() {
+    slipwayCopy = angular.copy($scope.slipwayDetails);
     $scope.editing = true;
   };
 
@@ -75,6 +76,6 @@ boatlaunchControllers
     var fileChooser = document.getElementById('file-chooser');
     var results = document.getElementById('results');
 
-    ImgUploadService.uploadImg(fileChooser, results, $scope.slipwayDetails)
+    ImgUploadService.uploadImg(fileChooser, results, $scope.slipwayDetails);
   };
 });

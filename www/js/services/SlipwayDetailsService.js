@@ -19,7 +19,9 @@ boatlaunchServices
 
     firebaseRef.child("slipwayDetails").child(slipwayKey).once('value', function(snapshot) {
 
-        var slipwayDetails = mostRecentSlipway = snapshot.val();
+        var slipwayDetails = snapshot.val();
+        mostRecentSlipway = snapshot.val();
+        
         memo[slipwayKey] = slipwayDetails;
         deferred.resolve(slipwayDetails);
 
@@ -46,6 +48,7 @@ boatlaunchServices
       RampType: data.RampType || null,
       Suitability: data.Suitability || null,
       UpperArea: data.UpperArea || null,
+      imgs: data.imgs || [],
       idKey: id
     };
 
