@@ -7,10 +7,15 @@
 
   <link href="lib/ionic/css/ionic.css" rel="stylesheet">
   <link href="css/style.css" rel="stylesheet">
+  <link href="lib/ion-gallery/dist/ion-gallery.css" rel="stylesheet">
+
 
   <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
     <link href="css/ionic.app.css" rel="stylesheet">
     -->
+
+  <!-- AWS Library -->
+  <script src="https://sdk.amazonaws.com/js/aws-sdk-2.2.26.min.js"></script>
 
   <!-- Firebase -->
   <script src="https://cdn.firebase.com/js/client/2.3.2/firebase.js"></script>
@@ -22,10 +27,22 @@
   <script src="//maps.googleapis.com/maps/api/js?key=AIzaSyB16sGmIekuGIvYOfNoW9T44377IU2d2Es&sensor=true"></script>
   <script src="lib/markerClusterer.min.js"></script>
 
+  <!--  lib files -->
+  <script src="lib/ion-gallery/dist/ion-gallery.js"></script>
+
   <script src="js/app.js"></script>
-  <script src="js/controllers.js"></script>
-  <script src="js/directives.js"></script>
-  <script src="js/services.js"></script>
+  <script src="js/controllers/controllers.js"></script>
+  <script src="js/controllers/MapCtrl.js"></script>
+  <script src="js/controllers/SlipwayDetailsCtrl.js"></script>
+  <script src="js/controllers/NewSlipwayCtrl.js"></script>
+  <script src="js/services/services.js"></script>
+  <script src="js/services/AddNewSlipway.js"></script>
+  <script src="js/services/FetchImgsService.js"></script>
+  <script src="js/services/ImgUploadService.js"></script>
+  <script src="js/services/SlipwayDetailsService.js"></script>
+  <script src="js/services/SlipwayLatLngService.js"></script>
+  <script src="js/services/ImgUploadService.js"></script>
+
 
 </head>
 
