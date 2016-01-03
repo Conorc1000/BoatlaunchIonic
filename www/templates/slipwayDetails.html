@@ -17,24 +17,14 @@
         <div class="col selectable"><b>Lat: </b> {{slipwayDetails.lat}}</div>
         <div class="col selectable"><b>Lng: </b> {{slipwayDetails.lng}}</div>
       </div>
-      <div class="row responsive-sm">
-        <div class="col selectable"><b>Description: </b> {{slipwayDetails.RampDescription || 'None'}}</div>
-      </div>
-      <div class="row responsive-sm">
-        <div class="col selectable"><b>Directions: </b> {{slipwayDetails.Directions || 'None'}}</div>
-      </div>
-      <div class="row responsive-sm">
-        <div class="col selectable"><b>Facilities: </b> {{slipwayDetails.Facilities || 'Unknown'}}</div>
-      </div>
-      <div class="row responsive-sm">
-        <div class="col selectable"><b>Navigational Hazards: </b> {{slipwayDetails.NavigationalHazards || 'Unknown'}}</div>
-      </div>
-      <div class="row responsive-sm">
-        <div class="col selectable"><b>Charges: </b> {{slipwayDetails.Charges || 'Unknown'}}</div>
-      </div>
-      <div class="row responsive-sm">
-        <div class="col selectable"><b>Ramp Type: </b> {{slipwayDetails.RampType || 'Unknown'}}</div>
-      </div>
+
+      <ion-list>
+        <ion-item class="selectable item-text-wrap" ng-repeat="description in longDescriptions">
+          <b>{{description[1]}}: </b><br>
+             {{slipwayDetails[description[0]]}}
+        </ion-item>
+      </ion-list>
+
       <div class="row responsive-sm">
         <div class="col selectable"><b>Suitability: </b> {{slipwayDetails.Suitability || 'Unknown'}}</div>
         <div class="col selectable"><b>Upper Area: </b> {{slipwayDetails.UpperArea || 'Unknown'}}</div>
@@ -44,27 +34,24 @@
         <div class="col selectable"><b>Phone Number: </b> {{slipwayDetails.PhoneNumber || 'Unknown'}}</div>
         <div class="col selectable"><b>Email: </b> {{slipwayDetails.Email || 'Unknown'}}</div>
         <div class="col selectable"><b>Nearest Place: </b> {{slipwayDetails.NearestPlace || 'Unknown'}}</div>
-
       </div>
-      <!-- <span ng-repeat="image in images">
-      <img ng-src="{{image}}" alt="" style="width:300px"/>
-    </span> -->
+
     </div>
-    <!-- <ion-gallery ion-gallery-items="images"></ion-gallery> -->
     <div class="row" ng-repeat="image in images" ng-if="$index % 4 === 0">
       <div class="col col-25" ng-if="$index < images.length">
-        <img ng-src="{{images[$index].src}}" width="100%" />
+        <img ng-click="toggleLargeImage($index, images[$index].src)" ng-src="{{images[$index].src}}" width="100%" />
       </div>
       <div class="col col-25" ng-if="$index + 1 < images.length">
-        <img ng-src="{{images[$index + 1].src}}" width="100%" />
+        <img ng-click="toggleLargeImage($index + 1, images[$index + 1].src)" ng-src="{{images[$index + 1].src}}" width="100%" />
       </div>
       <div class="col col-25" ng-if="$index + 2 < images.length">
-        <img ng-src="{{images[$index + 2].src}}" width="100%" />
+        <img ng-click="toggleLargeImage($index + 2, images[$index + 2].src)" ng-src="{{images[$index + 2].src}}" width="100%" />
       </div>
       <div class="col col-25" ng-if="$index + 3 < images.length">
-        <img ng-src="{{images[$index + 3].src}}" width="100%" />
+        <img ng-click="toggleLargeImage($index + 3, images[$index + 3].src)" ng-src="{{images[$index + 3].src}}" width="100%" />
       </div>
     </div>
+    <img ng-if="showLargeImage" ng-src="{{largeImageUrl}}" style="width:90%" />
     <div ng-if="editing">
       <div class="list">
         <label class="item item-input item-floating-label">

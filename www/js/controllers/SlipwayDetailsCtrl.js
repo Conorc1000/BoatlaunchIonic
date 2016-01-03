@@ -16,6 +16,15 @@ boatlaunchControllers
     $scope.slipwayDetails.lng = SlipwayLatLngService.getSavedLatLngs()[id][1];
   }
 
+  $scope.longDescriptions = [
+    ['RampDescription', 'Ramp Description'],
+    ['Directions', 'Directions'],
+    ['Facilities', 'Facilities'],
+    ['NavigationalHazards', 'Navigational Hazards'],
+    ['Charges', 'Charges'],
+    ['RampType', 'Ramp Type']
+  ];
+
   $scope.editing = false;
 
   $scope.editSlipway = function() {
@@ -31,6 +40,26 @@ boatlaunchControllers
     $scope.editing = false;
     SlipwayLatLngService.saveData(slipwayCopy.idKey, $scope.slipwayDetails);
     SlipwayDetailsService.saveData(slipwayCopy.idKey, $scope.slipwayDetails);
+  };
+
+  $scope.showLargeImage = false;
+  $scope.largeImageIndex = null;
+  $scope.largeImageUrl = '-';
+  $scope.toggleLargeImage = function(index, url){
+    if(!$scope.showLargeImage){
+      $scope.showLargeImage = true;
+      $scope.largeImageIndex = index;
+      $scope.largeImageUrl = url;
+    }
+    else{
+      if($scope.largeImageIndex === index){
+        $scope.showLargeImage = false;
+      }
+      else{
+        $scope.largeImageIndex = index;
+        $scope.largeImageUrl = url;
+      }
+    }
   };
 
   $scope.flagSlipway = function() {
