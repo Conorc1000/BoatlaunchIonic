@@ -1,0 +1,153 @@
+<ion-view>
+
+  <ion-header-bar class="bar-dark">
+    <h1 class="title">Slipway Details</h1>
+    <div class="buttons">
+      <button class="button button-clear" ng-click="goToMap()">Back</button>
+    </div>
+  </ion-header-bar>
+
+  <ion-content overflow-scroll="true">
+    <div ng-if="!editing">
+
+      <h2 class="selectable" ng-if="slipwayDetails.Name" class="col">{{slipwayDetails.Name}}</h2>
+
+      <div class="row responsive-sm">
+        <div class="col selectable"><b>Name: </b> {{slipwayDetails.Name || 'unknown'}}</div>
+        <div class="col selectable"><b>Lat: </b> {{slipwayDetails.lat}}</div>
+        <div class="col selectable"><b>Lng: </b> {{slipwayDetails.lng}}</div>
+      </div>
+      <div class="row responsive-sm">
+        <div class="col selectable"><b>Description: </b> {{slipwayDetails.RampDescription || 'None'}}</div>
+      </div>
+      <div class="row responsive-sm">
+        <div class="col selectable"><b>Directions: </b> {{slipwayDetails.Directions || 'None'}}</div>
+      </div>
+      <div class="row responsive-sm">
+        <div class="col selectable"><b>Facilities: </b> {{slipwayDetails.Facilities || 'Unknown'}}</div>
+      </div>
+      <div class="row responsive-sm">
+        <div class="col selectable"><b>Navigational Hazards: </b> {{slipwayDetails.NavigationalHazards || 'Unknown'}}</div>
+      </div>
+      <div class="row responsive-sm">
+        <div class="col selectable"><b>Charges: </b> {{slipwayDetails.Charges || 'Unknown'}}</div>
+      </div>
+      <div class="row responsive-sm">
+        <div class="col selectable"><b>Ramp Type: </b> {{slipwayDetails.RampType || 'Unknown'}}</div>
+      </div>
+      <div class="row responsive-sm">
+        <div class="col selectable"><b>Suitability: </b> {{slipwayDetails.Suitability || 'Unknown'}}</div>
+        <div class="col selectable"><b>Upper Area: </b> {{slipwayDetails.UpperArea || 'Unknown'}}</div>
+        <div class="col selectable"><b>Lower Area: </b> {{slipwayDetails.LowerArea || 'Unknown'}}</div>
+      </div>
+      <div class="row responsive-sm">
+        <div class="col selectable"><b>Phone Number: </b> {{slipwayDetails.PhoneNumber || 'Unknown'}}</div>
+        <div class="col selectable"><b>Email: </b> {{slipwayDetails.Email || 'Unknown'}}</div>
+        <div class="col selectable"><b>Nearest Place: </b> {{slipwayDetails.NearestPlace || 'Unknown'}}</div>
+
+      </div>
+      <!-- <span ng-repeat="image in images">
+      <img ng-src="{{image}}" alt="" style="width:300px"/>
+    </span> -->
+    </div>
+    <!-- <ion-gallery ion-gallery-items="images"></ion-gallery> -->
+    <div class="row" ng-repeat="image in images" ng-if="$index % 4 === 0">
+      <div class="col col-25" ng-if="$index < images.length">
+        <img ng-src="{{images[$index].src}}" width="100%" />
+      </div>
+      <div class="col col-25" ng-if="$index + 1 < images.length">
+        <img ng-src="{{images[$index + 1].src}}" width="100%" />
+      </div>
+      <div class="col col-25" ng-if="$index + 2 < images.length">
+        <img ng-src="{{images[$index + 2].src}}" width="100%" />
+      </div>
+      <div class="col col-25" ng-if="$index + 3 < images.length">
+        <img ng-src="{{images[$index + 3].src}}" width="100%" />
+      </div>
+    </div>
+    <div ng-if="editing">
+      <div class="list">
+        <label class="item item-input item-floating-label">
+          <span class="input-label">Name: </span>
+          <input type="text" ng-model="slipwayDetails.Name" placeholder="Enter the slipway's name">
+        </label>
+        <label class="item item-input item-floating-label">
+          <span class="input-label">Latitude: </span>
+          <input type="text" ng-model="slipwayDetails.lat">
+        </label>
+        <label class="item item-input item-floating-label">
+          <span class="input-label">Longitude: </span>
+          <input type="text" ng-model="slipwayDetails.lng">
+        </label>
+      </div>
+      <div class="list">
+        <label class="item item-input item-floating-label">
+          <span class="input-label">Description: </span>
+          <textarea ng-model="slipwayDetails.RampDescription"></textarea>
+        </label>
+        <label class="item item-input item-floating-label">
+          <span class="input-label">Directions: </span>
+          <textarea ng-model="slipwayDetails.Directions"></textarea>
+        </label>
+        <label class="item item-input item-floating-label">
+          <span class="input-label">Facilities: </span>
+          <textarea ng-model="slipwayDetails.Facilities"></textarea>
+        </label>
+        <label class="item item-input item-floating-label">
+          <span class="input-label">Navigational
+            <br> Hazards: </span>
+          <textarea ng-model="slipwayDetails.NavigationalHazards"></textarea>
+        </label>
+        <label class="item item-input item-floating-label">
+          <span class="input-label">Charges: </span>
+          <textarea ng-model="slipwayDetails.Charges"></textarea>
+        </label>
+        <label class="item item-input item-floating-label">
+          <span class="input-label">Ramp Type: </span>
+          <textarea ng-model="slipwayDetails.RampType"></textarea>
+        </label>
+      </div>
+
+      <div class="list">
+        <label class="item item-input item-floating-label">
+          <span class="input-label">Suitability: </span>
+          <input type="text" ng-model="slipwayDetails.Suitability">
+        </label>
+        <label class="item item-input item-floating-label">
+          <span class="input-label">Upper Area: </span>
+          <input type="text" ng-model="slipwayDetails.UpperArea">
+        </label>
+        <label class="item item-input item-floating-label">
+          <span class="input-label">Lower Area: </span>
+          <input type="text" ng-model="slipwayDetails.LowerArea">
+        </label>
+        <label class="item item-input item-floating-label">
+          <span class="input-label">Phone Number: </span>
+          <input type="text" ng-model="slipwayDetails.PhoneNumber">
+        </label>
+        <label class="item item-input item-floating-label">
+          <span class="input-label">Email: </span>
+          <input type="text" ng-model="slipwayDetails.Email" placeholder="name@domain.com">
+        </label>
+      </div>
+    </div>
+
+    <div>
+      Choose images to upload
+    </div>
+    <input type="file" id="file-chooser" />
+    <!-- <button id="upload-button"> Upload to S3 </button> -->
+    <div id="results"> </div>
+
+    <a ng-click="uploadImgs()" class="button button-icon icon ion-image">Upload Images</a>
+
+
+
+  </ion-content>
+  <ion-footer-bar class="bar-dark">
+    <a ng-show="!editing" ng-click="editSlipway()" class="button button-icon icon ion-edit">Edit Information</a>
+    <a ng-show="editing" ng-click="cancelEditSlipway()" class="button button-icon icon ion-close-circled">Cancel</a>
+    <a ng-show="!editing" ng-click="flagSlipway()" class="button pull-right button-icon button-assertive icon ion-alert-circled">Flag Slipway</a>
+    <a ng-show="editing" ng-click="saveChanges()" class="button pull-right button-icon icon ion-checkmark-round">Save Changes</a>
+  </ion-footer-bar>
+</ion-view>

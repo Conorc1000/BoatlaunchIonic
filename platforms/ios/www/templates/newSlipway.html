@@ -1,0 +1,85 @@
+<ion-view>
+
+  <ion-header-bar class="bar-dark">
+    <h1 class="title">New Slipway</h1>
+    <div class="buttons">
+      <button class="button button-clear" ng-click="goToMap()">Back</button>
+    </div>
+  </ion-header-bar>
+
+  <ion-content>
+    <h2> New slipway: {{slipwayDetails.Name}}</h2>
+    <h3> You can also add new slipways by right clicking on the map</h3>
+    <div>
+      <div class="list">
+        <label class="item item-input item-floating-label">
+          <span class="input-label">Name: </span>
+          <input type="text" ng-model="slipwayDetails.Name" placeholder="Enter the slipway's name">
+        </label>
+        <label class="item item-input item-floating-label">
+          <span class="input-label">Latitude: </span>
+          <input type="number" min="-90" max="90" ng-model="slipwayDetails.lat">
+        </label>
+        <label class="item item-input item-floating-label">
+          <span class="input-label">Longitude: </span>
+          <input type="number" min="-180" max="180" ng-model="slipwayDetails.lng">
+        </label>
+      </div>
+      <div class="list">
+        <label class="item item-input item-floating-label">
+          <span class="input-label">Description: </span>
+          <textarea ng-model="slipwayDetails.RampDescription"></textarea>
+        </label>
+        <label class="item item-input item-floating-label">
+          <span class="input-label">Directions: </span>
+          <textarea ng-model="slipwayDetails.Directions"></textarea>
+        </label>
+        <label class="item item-input item-floating-label">
+          <span class="input-label">Facilities: </span>
+          <textarea ng-model="slipwayDetails.Facilities"></textarea>
+        </label>
+        <label class="item item-input item-floating-label">
+          <span class="input-label">Navigational
+            <br> Hazards: </span>
+          <textarea ng-model="slipwayDetails.NavigationalHazards"></textarea>
+        </label>
+        <label class="item item-input item-floating-label">
+          <span class="input-label">Charges: </span>
+          <textarea ng-model="slipwayDetails.Charges"></textarea>
+        </label>
+        <label class="item item-input item-floating-label">
+          <span class="input-label">Ramp Type: </span>
+          <textarea ng-model="slipwayDetails.RampType"></textarea>
+        </label>
+      </div>
+
+      <div class="list">
+        <label class="item item-input item-floating-label">
+          <span class="input-label">Suitability: </span>
+          <input type="text" ng-model="slipwayDetails.Suitability">
+        </label>
+        <label class="item item-input item-floating-label">
+          <span class="input-label">Upper Area: </span>
+          <input type="text" ng-model="slipwayDetails.UpperArea">
+        </label>
+        <label class="item item-input item-floating-label">
+          <span class="input-label">Lower Area: </span>
+          <input type="text" ng-model="slipwayDetails.LowerArea">
+        </label>
+        <label class="item item-input item-floating-label">
+          <span class="input-label">Phone Number: </span>
+          <input type="text" ng-model="slipwayDetails.PhoneNumber">
+        </label>
+        <label class="item item-input item-floating-label">
+          <span class="input-label">Email: </span>
+          <input type="text" ng-model="slipwayDetails.Email" placeholder="name@domain.com">
+        </label>
+      </div>
+    </div>
+    <a ng-click="uploadImages()" class="button button-icon icon ion-image">Upload Images</a>
+  </ion-content>
+  <ion-footer-bar class="bar-dark">
+    <a ng-click="goToMap()" class="button button-icon icon ion-close-circled">Cancel</a>
+    <a ng-click="saveChanges()" class="button pull-right button-icon icon ion-checkmark-round">Save Changes</a>
+  </ion-footer-bar>
+</ion-view>
