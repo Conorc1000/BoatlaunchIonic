@@ -6,7 +6,7 @@ boatlaunchServices
 
   AWS.config.update({
     accessKeyId: 'AKIAIC55N4PSACLZW5DA',
-    secretAccessKey: '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'
+    secretAccessKey: 'TODO: EDIT'
   });
   AWS.config.region = 'eu-west-1'; //could also be Ireland
 
