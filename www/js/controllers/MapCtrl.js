@@ -1,14 +1,21 @@
 boatlaunchControllers
 
-.controller('MapCtrl', function($scope, $ionicLoading, $compile, SlipwayLatLngService, SlipwayDetailsService, $state) {
+.controller('MapCtrl', function($scope, $ionicLoading, $compile, SlipwayLatLngService,
+  SlipwayDetailsService, MapLocationService, $state) {
   //called when the page loads or you go back to the route
   function initialize() {
     console.log('init');
-    var center = new google.maps.LatLng(51.5, 0);
+    var center;
+
+    // if(slipwayDetails === true){
+    //   center = new google.maps.LatLng(slipwayDetails, 0);
+    // }
+    var latLongZoom = MapLocationService.getLatLongZoom();
+    center = new google.maps.LatLng(latLongZoom[0],latLongZoom[1]);
 
     var mapOptions = {
       center: center,
-      zoom: 6,
+      zoom: latLongZoom[2],
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
     var map = new google.maps.Map(document.getElementById("map"),
@@ -51,6 +58,9 @@ boatlaunchControllers
           var name = data.Name || 'unknown',
             lat = latLng[0].substr(0, 10),
             lng = latLng[1].substr(0, 10);
+
+            MapLocationService.setLatLongZoom(lat, lng, 9);
+
 
           var contentString = "<div class='scrollFix'>" +
             "<div><b> Name:</b> " + name + "</div>" +
