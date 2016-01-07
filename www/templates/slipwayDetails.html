@@ -13,7 +13,7 @@
       <h2 class="selectable" ng-if="slipwayDetails.Name" class="col">{{slipwayDetails.Name}}</h2>
 
       <div class="row responsive-sm">
-        <div class="col selectable"><b>Name: </b> {{slipwayDetails.Name || 'unknown'}}</div>
+        <div class="col selectable"><b>Nearest Place: </b> {{slipwayDetails.NearestPlace || 'unknown'}}</div>
         <div class="col selectable"><b>Lat: </b> {{slipwayDetails.lat}}</div>
         <div class="col selectable"><b>Long: </b> {{slipwayDetails.lng}}</div>
       </div>
@@ -27,16 +27,16 @@
 
       <div class="row responsive-sm">
         <div class="col selectable"><b>Suitability: </b> {{slipwayDetails.Suitability || 'Unknown'}}</div>
+        <div class="col selectable"><b>RampLength: </b> {{slipwayDetails.RampLength || 'Unknown'}}</div>
         <div class="col selectable"><b>Upper Area: </b> {{slipwayDetails.UpperArea || 'Unknown'}}</div>
         <div class="col selectable"><b>Lower Area: </b> {{slipwayDetails.LowerArea || 'Unknown'}}</div>
       </div>
       <div class="row responsive-sm">
         <div class="col selectable"><b>Phone Number: </b> {{slipwayDetails.PhoneNumber || 'Unknown'}}</div>
         <div class="col selectable"><b>Email: </b> {{slipwayDetails.Email || 'Unknown'}}</div>
-        <div class="col selectable"><b>Nearest Place: </b> {{slipwayDetails.NearestPlace || 'Unknown'}}</div>
       </div>
 
-    </div>
+    </div ng-if="!editing">
     <div class="row" ng-repeat="image in images" ng-if="$index % 4 === 0">
       <div class="col col-25" ng-if="$index < images.length">
         <img ng-click="toggleLargeImage($index, images[$index].src)" ng-src="{{images[$index].src}}" width="100%" />
@@ -70,43 +70,74 @@
       <div class="list">
         <label class="item item-input item-floating-label">
           <span class="input-label">Description: </span>
-          <textarea ng-model="slipwayDetails.RampDescription"></textarea>
+          <textarea rows="5" class=textArea ng-model="slipwayDetails.RampDescription"></textarea>
         </label>
         <label class="item item-input item-floating-label">
           <span class="input-label">Directions: </span>
-          <textarea ng-model="slipwayDetails.Directions"></textarea>
+          <textarea rows="5" ng-model="slipwayDetails.Directions"></textarea>
         </label>
         <label class="item item-input item-floating-label">
           <span class="input-label">Facilities: </span>
-          <textarea ng-model="slipwayDetails.Facilities"></textarea>
+          <textarea rows="5" ng-model="slipwayDetails.Facilities"></textarea>
         </label>
         <label class="item item-input item-floating-label">
           <span class="input-label">Navigational
             <br> Hazards: </span>
-          <textarea ng-model="slipwayDetails.NavigationalHazards"></textarea>
+          <textarea rows="5" ng-model="slipwayDetails.NavigationalHazards"></textarea>
         </label>
         <label class="item item-input item-floating-label">
           <span class="input-label">Charges: </span>
-          <textarea ng-model="slipwayDetails.Charges"></textarea>
+          <textarea rows="5" ng-model="slipwayDetails.Charges"></textarea>
         </label>
         <label class="item item-input item-floating-label">
           <span class="input-label">Ramp Type: </span>
-          <textarea ng-model="slipwayDetails.RampType"></textarea>
+          <textarea rows="5" ng-model="slipwayDetails.RampType"></textarea>
         </label>
       </div>
 
       <div class="list">
         <label class="item item-input item-floating-label">
           <span class="input-label">Suitability: </span>
-          <input type="text" ng-model="slipwayDetails.Suitability">
+          <select ng-model="slipwayDetails.Suitability">
+            <option value="Unknown">Unknown</option>
+            <option value="Portable Only">Portable Only</option>
+            <option value="Small trailer can be pushed">Small trailer can be pushed</option>
+            <option value="Large trailer needs a car">Large trailer needs a car</option>
+          </select>
+        </label>
+        <label class="item item-input item-floating-label">
+          <span class="input-label">Ramp Length: </span>
+          <select ng-model="slipwayDetails.RampLength">
+            <option value="Unknown">Unknown</option>
+            <option value="No Ramp">No Ramp</option>
+            <option value="1/4 tidal">1/4 tidal</option>
+            <option value="1/2 tidal">1/2 tidal</option>
+            <option value="3/4 tidal">3/4 tidal</option>
+            <option value="Whole of tidal range">Whole of tidal range</option>
+            <option value="Non-tidal">Non-tidal</option>
+          </select>
         </label>
         <label class="item item-input item-floating-label">
           <span class="input-label">Upper Area: </span>
-          <input type="text" ng-model="slipwayDetails.UpperArea">
+          <select type="text" ng-model="slipwayDetails.UpperArea">
+            <option value="Unknown">Unknown</option>
+            <option value="Sand">Sand</option>
+            <option value="Shingle">Shingle</option>
+            <option value="Rock">Rock</option>
+            <option value="Harbour">Harbour</option>
+            <option value="Concrete">Concrete</option>
+          </select>
         </label>
         <label class="item item-input item-floating-label">
           <span class="input-label">Lower Area: </span>
-          <input type="text" ng-model="slipwayDetails.LowerArea">
+          <select type="text" ng-model="slipwayDetails.LowerArea">
+            <option value="Unknown">Unknown</option>
+            <option value="Sand">Sand</option>
+            <option value="Shingle">Shingle</option>
+            <option value="Rock">Rock</option>
+            <option value="Harbour">Harbour</option>
+            <option value="Concrete">Concrete</option>
+          </select>
         </label>
         <label class="item item-input item-floating-label">
           <span class="input-label">Phone Number: </span>
