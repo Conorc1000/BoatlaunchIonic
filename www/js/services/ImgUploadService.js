@@ -22,6 +22,14 @@ boatlaunchServices
     }
     var imgId = "New" + Date.now();
 
+    var file = fileChooser.files[0];
+
+    if(!file)
+    {
+      alert('No image selected to upload. Please choose file first.')
+      return;
+    }
+
     slipway.imgs.push(imgId);
     firebaseRef.child("slipwayDetails").child(slipway.idKey).child("imgs").set(slipway.imgs, function(err) {
       if (err) {
@@ -38,14 +46,11 @@ boatlaunchServices
 
     var file = fileChooser.files[0];
 
-    console.log(file);
-
-
     if (file) {
 
       if(file.size > 20971520)
       {
-        alert('File too large. Please upload an image of less than 20Mb')
+        alert('File too large. Please upload an image of less than 20Mb');
         return;
       }
 
@@ -81,11 +86,7 @@ boatlaunchServices
     xhr.setRequestHeader('x-amz-acl', 'public-read');
     xhr.onload = function(loadResponse) {
       if (xhr.status === 200) {
-        console.log('xhr.status === 200');
-        console.log('loadResponse', loadResponse);
-        results.innerHTML = 'File sucessfully uploaded!'
-        // document.getElementById("preview").src = url;
-        // document.getElementById("avatar_url").value = url;
+        results.innerHTML = '<h3>File sucessfully uploaded!</h3>';
       }
     };
     xhr.onerror = function() {
