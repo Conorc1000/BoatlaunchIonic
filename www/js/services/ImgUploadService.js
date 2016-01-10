@@ -39,7 +39,16 @@ boatlaunchServices
     var file = fileChooser.files[0];
 
     console.log(file);
+
+
     if (file) {
+
+      if(file.size > 20971520)
+      {
+        alert('File too large. Please upload an image of less than 20Mb')
+        return;
+      }
+
       results.innerHTML = '';
 
       get_signed_request(file, imgId);
@@ -74,6 +83,7 @@ boatlaunchServices
       if (xhr.status === 200) {
         console.log('xhr.status === 200');
         console.log('loadResponse', loadResponse);
+        results.innerHTML = 'File sucessfully uploaded!'
         // document.getElementById("preview").src = url;
         // document.getElementById("avatar_url").value = url;
       }
