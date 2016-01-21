@@ -13,11 +13,24 @@ boatlaunchControllers
     var latLongZoom = MapLocationService.getLatLongZoom();
     center = new google.maps.LatLng(latLongZoom[0],latLongZoom[1]);
 
+    var mobile;
+
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+      mobile = true;
+    } else {
+      mobile = false;
+
+    }
+
     var mapOptions = {
       center: center,
       zoom: latLongZoom[2],
-      mapTypeId: google.maps.MapTypeId.ROADMAP
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
+      mapTypeControl: !mobile,
+      zoomControl: !mobile,
+      streetViewControl: !mobile
     };
+
     var map = new google.maps.Map(document.getElementById("map"),
       mapOptions);
 
