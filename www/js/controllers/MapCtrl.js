@@ -104,6 +104,11 @@ boatlaunchControllers
     $state.go('details');
   };
 
+  $scope.contact = function() {
+    $state.go('contact');
+  };
+  
+
   $scope.addSlipway = function() {
     $state.go('newSlipway');
   };
