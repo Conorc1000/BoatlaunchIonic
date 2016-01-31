@@ -4,6 +4,8 @@ boatlaunchControllers
   $scope.slipwayDetails = {};
 
   $scope.goToMap = function() {
+    console.log("IN THE NewSlipwayCtrl CTRL");
+
     $state.go('map');
   };
 

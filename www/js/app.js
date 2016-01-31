@@ -32,6 +32,12 @@ angular.module('starter', ['ionic', 'ion-gallery', 'starter.controllers', 'start
       templateUrl: "templates/slipwayDetails.html",
       controller: 'SlipwayDetailsCtrl'
     })
+    .state('contact', {
+      url: "/contact",
+      templateUrl: "templates/contact.html",
+      controller: 'ContactCtrl'
+
+    })
     .state('newSlipway', {
       url: "/newSlipway",
       templateUrl: "templates/newSlipway.html",

@@ -4,6 +4,13 @@
   height: 100%;
 }
 
+#contactText {
+  padding: 1em;
+}
+
+.contactParagraph{
+  padding-left: 1em;
+}
 
 .scroll {
   height: 100%;
