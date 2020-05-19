@@ -10,8 +10,6 @@ app.set('port', process.env.PORT || 5000);
 
 var AWS_SECRET_KEY = process.env.AWS_SECRET_KEY;
 
-console.log(AWS_SECRET_KEY);
-
 app.listen(app.get('port'), function() {
   console.log('Express server listening on port ' + app.get('port'));
 });
@@ -25,7 +23,7 @@ app.get('/sign_s3', function(req, res) {
   });
   var s3 = new aws.S3();
   var s3_params = {
-    Bucket: 'boatlaunchslipwayphotos',
+    Bucket: 'boatlaunchphotos',
     Key: 'WebSitePhotos/' + req.query.file_name,
     Expires: 60,
     ContentType: req.query.file_type,
@@ -38,7 +36,7 @@ app.get('/sign_s3', function(req, res) {
     } else {
       var return_data = {
         signed_request: data,
-        url: 'https://' + 'boatlaunchslipwayphotos' + '.s3.amazonaws.com/' + req.query.imgId
+        url: 'https://' + 'boatlaunchphotos' + '.s3.amazonaws.com/' + req.query.imgId
       };
       res.write(JSON.stringify(return_data));
       res.end();
